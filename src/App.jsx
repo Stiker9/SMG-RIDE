@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import brandMark from './assets/brand/smg-ride-mark.svg'
+import headerLogo from './assets/brand/smg-ride-header-logo.png'
 import forestRide from './assets/gallery/forest-ride.jpg'
 import groupSelfie from './assets/gallery/group-selfie.jpg'
 import groupStart from './assets/gallery/group-start.jpg'
@@ -120,7 +120,7 @@ function App() {
 
         <header className="hero-nav relative z-20 mx-auto mt-4 flex w-[calc(100%-2rem)] max-w-7xl items-center justify-between px-4 py-3 sm:px-5">
           <a className="brand-link" href="#top" aria-label="SMG RIDE">
-            <img className="brand-mark" src={brandMark} alt="" />
+            <img className="brand-cutout" src={headerLogo} alt="" />
           </a>
 
           <nav className="hidden items-center gap-7 text-sm font-bold uppercase text-white/70 md:flex">

@@ -133,15 +133,17 @@ a {
 .brand-link {
   display: inline-flex;
   align-items: center;
-  min-width: 9.5rem;
+  width: clamp(6.8rem, 9vw, 8.1rem);
+  min-height: 4.1rem;
+  overflow: visible;
 }
 
-.brand-mark {
+.brand-cutout {
   display: block;
-  width: clamp(8.6rem, 13vw, 11.5rem);
+  width: 100%;
   height: auto;
   filter:
-    drop-shadow(0 0 12px rgba(241, 18, 18, 0.28))
+    drop-shadow(0 0 14px rgba(241, 18, 18, 0.38))
     drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
 }
 
