@@ -133,18 +133,37 @@ a {
 .brand-link {
   display: inline-flex;
   align-items: center;
-  width: clamp(6.8rem, 9vw, 8.1rem);
-  min-height: 4.1rem;
-  overflow: visible;
+  gap: 0.42rem;
+  min-height: 3.1rem;
+  color: #ffffff;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.4));
 }
 
-.brand-cutout {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter:
-    drop-shadow(0 0 14px rgba(241, 18, 18, 0.38))
-    drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+.brand-word {
+  font-family:
+    Oswald, Impact, "Arial Narrow", Manrope, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1.75rem, 2.2vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.9;
+}
+
+.brand-word--smg {
+  color: #ffffff;
+}
+
+.brand-word--ride {
+  color: #f4f4f4;
+  text-shadow: 0 0 20px rgba(241, 18, 18, 0.35);
+}
+
+.brand-slash {
+  width: 1.45rem;
+  height: 0.62rem;
+  transform: skewX(-22deg);
+  background:
+    linear-gradient(135deg, transparent 0 18%, #f11212 18% 48%, transparent 48% 58%, #f11212 58% 100%);
+  box-shadow: 0 0 18px rgba(241, 18, 18, 0.62);
 }
 
 header nav a {
