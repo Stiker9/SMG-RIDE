@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import atvLogo from './assets/brand/smg-ride-atv-logo.png'
+import brandMark from './assets/brand/smg-ride-mark.svg'
 import forestRide from './assets/gallery/forest-ride.jpg'
 import groupSelfie from './assets/gallery/group-selfie.jpg'
 import groupStart from './assets/gallery/group-start.jpg'
@@ -119,11 +119,8 @@ function App() {
         <div className="hero-noise" />
 
         <header className="hero-nav relative z-20 mx-auto mt-4 flex w-[calc(100%-2rem)] max-w-7xl items-center justify-between px-4 py-3 sm:px-5">
-          <a className="flex items-center gap-3" href="#top" aria-label="SMG RIDE">
-            <img className="h-12 w-12 object-contain" src={atvLogo} alt="" />
-            <span className="font-display text-2xl font-black uppercase">
-              SMG RIDE
-            </span>
+          <a className="brand-link" href="#top" aria-label="SMG RIDE">
+            <img className="brand-mark" src={brandMark} alt="" />
           </a>
 
           <nav className="hidden items-center gap-7 text-sm font-bold uppercase text-white/70 md:flex">

@@ -130,6 +130,21 @@ a {
   backdrop-filter: blur(18px);
 }
 
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  min-width: 9.5rem;
+}
+
+.brand-mark {
+  display: block;
+  width: clamp(8.6rem, 13vw, 11.5rem);
+  height: auto;
+  filter:
+    drop-shadow(0 0 12px rgba(241, 18, 18, 0.28))
+    drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+}
+
 header nav a {
   position: relative;
   transition: color 180ms ease;

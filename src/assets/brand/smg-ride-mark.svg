@@ -1,0 +1,32 @@
+<svg width="220" height="72" viewBox="0 0 220 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="badge" x1="18" y1="18" x2="180" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f01a1a"/>
+      <stop offset="1" stop-color="#7b0303"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="62" y1="16" x2="172" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset="0.48" stop-color="#f1f1f1"/>
+      <stop offset="1" stop-color="#9a9a9a"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-30%" width="140%" height="160%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#ff1c1c" flood-opacity="0.7"/>
+      <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <path d="M8 24L128 15L205 23L190 61H12L8 24Z" fill="#050505" stroke="url(#badge)" stroke-width="4"/>
+  <path d="M15 28L115 21L195 27L184 55H18L15 28Z" fill="#0b0b0b"/>
+
+  <path d="M154 12C162 12 170 14 177 18L188 18L193 23L176 24C169 21 162 19 154 19C142 19 132 23 124 30L116 28C126 18 139 12 154 12Z" fill="#d7d7d7"/>
+  <path d="M126 27L140 27L132 38L151 35L130 55L137 41L119 45L126 27Z" fill="#ec1111"/>
+  <path d="M22 15L50 11L62 16L41 18L34 25L22 25L22 15Z" fill="#222" stroke="#eeeeee" stroke-width="1.4"/>
+  <path d="M183 46C201 43 211 46 213 53C215 62 194 67 156 66C134 65 116 63 100 60" stroke="#f01919" stroke-width="4" stroke-linecap="round"/>
+  <path d="M182 45C199 43 208 46 209 52C210 58 193 62 160 61C141 61 124 59 108 56" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+
+  <g filter="url(#glow)">
+    <text x="29" y="36" fill="url(#metal)" font-family="Oswald, Impact, Arial Black, sans-serif" font-size="22" font-weight="800" letter-spacing="1.2">SMG</text>
+    <text x="27" y="59" fill="url(#metal)" font-family="Oswald, Impact, Arial Black, sans-serif" font-size="31" font-weight="900" letter-spacing="0.6">RIDE</text>
+  </g>
+  <path d="M81 29L105 25L96 35L128 31L101 45L109 36L76 42L81 29Z" fill="#ef1616"/>
+</svg>
