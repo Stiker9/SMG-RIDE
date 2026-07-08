@@ -293,6 +293,79 @@ header nav a:hover::after {
   text-transform: uppercase;
 }
 
+.hero-bridge-section {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 34svh;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(241, 18, 18, 0.12), transparent 28rem),
+    linear-gradient(180deg, #020202 0%, #000000 54%, #050505 100%);
+  overflow: hidden;
+}
+
+.hero-bridge-section::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent 0 19%, rgba(241, 18, 18, 0.2) 19.15% 19.35%, transparent 19.5% 100%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px);
+  background-size: auto, 100% 6.5rem;
+  opacity: 0.55;
+}
+
+.hero-bridge-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 66rem);
+  margin-inline: auto;
+  padding: 3.8rem 1rem;
+  text-align: center;
+}
+
+.hero-bridge-eyebrow {
+  justify-content: center;
+  border-left: 0;
+  padding-left: 0;
+}
+
+.hero-bridge-eyebrow::before,
+.hero-bridge-eyebrow::after {
+  width: clamp(2.2rem, 7vw, 5.5rem);
+  height: 2px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(241, 18, 18, 0.95));
+}
+
+.hero-bridge-eyebrow::after {
+  background: linear-gradient(90deg, rgba(241, 18, 18, 0.95), transparent);
+}
+
+.hero-bridge-title {
+  margin-top: 1.35rem;
+  color: #ffffff;
+  font-family:
+    Oswald, Impact, "Arial Narrow", Manrope, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(3rem, 5.35vw, 5rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.hero-bridge-copy {
+  max-width: 48rem;
+  margin: 1.2rem auto 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  font-weight: 600;
+  line-height: 1.8;
+}
+
 .hero-proof-panel {
   position: relative;
   overflow: hidden;
@@ -875,6 +948,22 @@ header nav a:hover::after {
 
   .hero-proof-panel {
     max-width: 22rem;
+  }
+
+  .hero-bridge-section {
+    min-height: auto;
+  }
+
+  .hero-bridge-inner {
+    padding-block: 3.6rem;
+  }
+
+  .hero-bridge-title {
+    font-size: 2.65rem;
+  }
+
+  .hero-bridge-copy {
+    line-height: 1.7;
   }
 
   .video-story-section .mx-auto {

@@ -106,7 +106,7 @@ function App() {
 
   return (
     <main className="site-shell min-h-screen overflow-hidden text-white">
-      <section className="hero-premium relative min-h-[96svh] overflow-hidden">
+      <section className="hero-premium relative min-h-[82svh] overflow-hidden">
         <img
           className="hero-bg-image absolute inset-0 h-full w-full object-cover"
           src={heroCinematic}
@@ -138,7 +138,7 @@ function App() {
 
         <div
           id="top"
-          className="relative z-10 mx-auto grid min-h-[calc(94svh-88px)] w-full max-w-7xl content-end gap-10 px-5 pb-10 pt-14 sm:px-8 lg:grid-cols-[1fr_280px] lg:pb-14"
+          className="relative z-10 mx-auto grid min-h-[calc(80svh-88px)] w-full max-w-7xl content-end gap-10 px-5 pb-10 pt-14 sm:px-8 lg:grid-cols-[1fr_280px] lg:pb-14"
         >
           <div className="max-w-4xl">
             <p className="eyebrow">Прокат мощных квадроциклов в п. Симагино</p>
@@ -171,6 +171,18 @@ function App() {
               ))}
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section className="hero-bridge-section">
+        <div className="hero-bridge-inner">
+          <p className="eyebrow hero-bridge-eyebrow">SMG RIDE / п. Симагино</p>
+          <h2 className="hero-bridge-title">
+            Авторские маршруты по лесам, карьерам и бродам
+          </h2>
+          <p className="hero-bridge-copy">
+            Мы не даем стандартный круг по полю. Маршрут собирается как настоящий off-road выезд: лесные дороги, песочные холмы, водные участки и видовые точки в 30 км от Санкт-Петербурга.
+          </p>
         </div>
       </section>
 
