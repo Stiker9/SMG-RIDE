@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import forestRide from './assets/gallery/forest-ride.jpg'
 import groupSelfie from './assets/gallery/group-selfie.jpg'
 import groupStart from './assets/gallery/group-start.jpg'
 import helmetCloseup from './assets/gallery/helmet-closeup.jpg'
-import heroCinematic from './assets/gallery/hero-cinematic.png'
+import heroCinematic from './assets/gallery/head.png'
 import heroOverlook from './assets/gallery/hero-overlook.png'
 import locationMap from './assets/gallery/location-map.png'
 
@@ -101,23 +101,66 @@ const gallery = [
   { image: heroOverlook, title: 'Видовая точка' },
 ]
 
-function App() {
-  const [openFaqIndex, setOpenFaqIndex] = useState(0)
+function NavLink({ href, children }) {
+  const ref = useRef(null)
+  const reduceMotionRef = useRef(false)
+
+  useEffect(() => {
+    reduceMotionRef.current = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+  }, [])
+
+  const handleMove = (event) => {
+    const el = ref.current
+    if (!el || reduceMotionRef.current) return
+    const rect = el.getBoundingClientRect()
+    const offsetX = event.clientX - (rect.left + rect.width / 2)
+    const offsetY = event.clientY - (rect.top + rect.height / 2)
+    el.style.transform = `translate(${offsetX * 0.25}px, ${offsetY * 0.35}px)`
+  }
+
+  const handleLeave = () => {
+    const el = ref.current
+    if (el) el.style.transform = 'translate(0, 0)'
+  }
 
   return (
-    <main className="site-shell min-h-screen overflow-hidden text-white">
-      <section className="hero-premium relative min-h-[82svh] overflow-hidden">
-        <img
-          className="hero-bg-image absolute inset-0 h-full w-full object-cover"
-          src={heroCinematic}
-          alt="Квадроцикл SMG RIDE на видовой точке маршрута"
-        />
-        <div className="absolute inset-0 hero-scrim" />
-        <div className="hero-redline hero-redline--top" />
-        <div className="hero-redline hero-redline--bottom" />
-        <div className="hero-noise" />
+    <a
+      ref={ref}
+      href={href}
+      className="nav-magnetic"
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+    >
+      {children}
+    </a>
+  )
+}
 
-        <header className="hero-nav relative z-20 mx-auto mt-4 flex w-[calc(100%-2rem)] max-w-7xl items-center justify-between px-4 py-3 sm:px-5">
+function App() {
+  const [openFaqIndex, setOpenFaqIndex] = useState(0)
+  const [navScrolled, setNavScrolled] = useState(false)
+  const navSentinelRef = useRef(null)
+
+  useEffect(() => {
+    const node = navSentinelRef.current
+    if (!node) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setNavScrolled(!entry.isIntersecting),
+      { threshold: 0 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <main className="site-shell relative min-h-screen overflow-hidden text-white">
+      <div ref={navSentinelRef} className="absolute left-0 top-0 h-px w-full" aria-hidden="true" />
+
+      <header className={`hero-nav${navScrolled ? ' hero-nav--scrolled' : ''}`}>
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
           <a className="brand-link" href="#top" aria-label="SMG RIDE">
             <span className="brand-word brand-word--smg">SMG</span>
             <span className="brand-slash" />
@@ -125,25 +168,38 @@ function App() {
           </a>
 
           <nav className="hidden items-center gap-7 text-sm font-bold uppercase text-white/70 md:flex">
-            <a href="#routes">Маршруты</a>
-            <a href="#price">Цены</a>
-            <a href="#faq">FAQ</a>
-            <a href="#contacts">Как найти</a>
+            <NavLink href="#routes">Маршруты</NavLink>
+            <NavLink href="#price">Цены</NavLink>
+            <NavLink href="#faq">FAQ</NavLink>
+            <NavLink href="#contacts">Как найти</NavLink>
           </nav>
 
           <a className="btn btn-primary hidden sm:inline-flex" href={telegramUrl}>
             Записаться
           </a>
-        </header>
+        </div>
+      </header>
+
+      <section className="hero-premium relative min-h-[66svh] overflow-hidden">
+        <img
+          className="hero-bg-image absolute inset-0 h-full w-full object-cover"
+          src={heroCinematic}
+          alt="Квадроцикл SMG RIDE на видовой точке маршрута"
+        />
+        <div className="absolute inset-0 hero-scrim" />
+        <div className="hero-nav-scrim" />
+        <div className="hero-redline hero-redline--top" />
+        <div className="hero-redline hero-redline--bottom" />
+        <div className="hero-noise" />
 
         <div
           id="top"
-          className="relative z-10 mx-auto grid min-h-[calc(80svh-88px)] w-full max-w-7xl content-end gap-10 px-5 pb-10 pt-14 sm:px-8 lg:grid-cols-[1fr_280px] lg:pb-14"
+          className="relative z-10 mx-auto grid min-h-[calc(64svh-88px)] w-full max-w-7xl content-end px-5 pb-8 pt-24 sm:px-8 lg:pb-10"
         >
-          <div className="max-w-4xl">
+          <div className="max-w-3xl">
             <p className="eyebrow">Прокат мощных квадроциклов в п. Симагино</p>
-            <h1 className="mt-5 max-w-4xl font-display text-5xl font-black uppercase leading-[0.92] sm:text-7xl lg:text-8xl">
-              Мощные квадроциклы 30 км от Санкт-Петербурга
+            <h1 className="mt-5 max-w-3xl font-display text-[1.7rem] font-black uppercase leading-[1] sm:text-6xl lg:text-6xl">
+              Мощные квадроциклы для бездорожья
             </h1>
             <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white/78">
               Свежие квадроциклы 2025 года, авторские маршруты, лесные дороги,
@@ -158,37 +214,32 @@ function App() {
                 {phoneNumber}
               </a>
             </div>
-          </div>
 
-          <aside className="hero-proof-panel self-end">
-            <p>SMG RIDE / SIMAGINO</p>
-            <div className="hero-proof-panel__stats">
+            <div className="hero-stats-row mt-9">
               {stats.map(([value, label]) => (
-                <div className="metric" key={label}>
+                <div className="hero-stats-row__item" key={label}>
                   <strong>{value}</strong>
                   <span>{label}</span>
                 </div>
               ))}
             </div>
-          </aside>
+          </div>
         </div>
       </section>
 
       <section className="hero-bridge-section">
         <div className="hero-bridge-inner">
-          <p className="eyebrow hero-bridge-eyebrow">SMG RIDE / п. Симагино</p>
-          <h2 className="hero-bridge-title">
-            Авторские маршруты по лесам, карьерам и бродам
-          </h2>
-          <p className="hero-bridge-copy">
-            Мы не даем стандартный круг по полю. Маршрут собирается как настоящий off-road выезд: лесные дороги, песочные холмы, водные участки и видовые точки в 30 км от Санкт-Петербурга.
-          </p>
-        </div>
-      </section>
+          <div className="hero-bridge-content">
+            <p className="eyebrow hero-bridge-eyebrow">SMG RIDE / п. Симагино</p>
+            <h2 className="hero-bridge-title">
+              Авторские маршруты по лесам, карьерам и бродам
+            </h2>
+            <p className="hero-bridge-copy">
+              Мы не даем стандартный круг по полю. Маршрут собирается как настоящий off-road выезд: лесные дороги, песочные холмы, водные участки и видовые точки в 30 км от Санкт-Петербурга.
+            </p>
+          </div>
 
-      <section className="video-story-section">
-        <div className="mx-auto grid w-full max-w-7xl gap-8 px-5 py-12 sm:px-8 lg:grid-cols-[1.08fr_0.72fr] lg:items-center lg:py-16">
-          <div className="video-panel video-panel--feature">
+          <div className="hero-bridge-media">
             <video
               autoPlay
               loop
@@ -197,25 +248,8 @@ function App() {
               preload="metadata"
               poster={forestRide}
               src="/media/smg-ride-action.mov"
+              aria-label="Видео с маршрута SMG RIDE"
             />
-            <div>
-              <p className="eyebrow">Видео с маршрута</p>
-              <h2 className="font-display text-4xl font-black uppercase leading-none sm:text-5xl">
-                Сразу после шапки — реальный драйв, ради которого приезжают
-              </h2>
-            </div>
-          </div>
-
-          <div className="video-story-copy">
-            <p className="eyebrow">Атмосфера SMG RIDE</p>
-            <h2 className="mt-4 font-display text-4xl font-black uppercase leading-none sm:text-5xl">
-              Сначала почувствовать маршрут. Потом выбрать время
-            </h2>
-            <p className="mt-5 leading-8 text-white/64">
-              Под первым экраном теперь стоит живой ролик: техника, лес, скорость и
-              эмоции без лишних объяснений. Он связывает обещание в шапке с реальным
-              опытом на маршруте.
-            </p>
           </div>
         </div>
       </section>
