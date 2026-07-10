@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import forestRide from './assets/gallery/forest-ride.jpg'
-import groupSelfie from './assets/gallery/group-selfie.jpg'
+import forestDuo from './assets/gallery/forest-duo.jpg'
 import groupStart from './assets/gallery/group-start.jpg'
 import helmetCloseup from './assets/gallery/helmet-closeup.jpg'
 import heroCinematic from './assets/gallery/head.png'
 import heroOverlook from './assets/gallery/hero-overlook.png'
 import locationMap from './assets/gallery/location-map.png'
+import mudAction from './assets/gallery/mud-action.jpg'
+import ambientTrackUrl from './assets/gallery/Booker - Время колокольчиков (pesni.fm).mp3'
+import brandMark from './assets/brand/smg-ride-atv-logo.png'
+import BookingForm from './components/BookingForm.jsx'
 
 const phoneNumber = import.meta.env.VITE_PUBLIC_PHONE ?? '+7 995 590 7057'
 const phoneHref = import.meta.env.VITE_PUBLIC_PHONE_HREF ?? 'tel:+79955907057'
@@ -54,7 +58,7 @@ const routes = [
   {
     name: 'Индивидуальный',
     time: 'от 2 часов',
-    image: groupSelfie,
+    image: forestDuo,
     copy: 'Маршрут под вашу идею: можно договориться на долгий выезд, пикник, купание в озере и свои остановки.',
   },
 ]
@@ -98,10 +102,10 @@ const faq = [
 ]
 
 const gallery = [
-  { image: groupStart, title: 'Старт группы' },
-  { image: helmetCloseup, title: 'Экипировка' },
-  { image: forestRide, title: 'Лесной участок' },
-  { image: heroOverlook, title: 'Видовая точка' },
+  { image: heroOverlook, title: 'Видовая точка', area: 'a' },
+  { image: groupStart, title: 'Старт группы', area: 'b' },
+  { image: helmetCloseup, title: 'Экипировка', area: 'c' },
+  { image: forestRide, title: 'Лесной участок', area: 'd' },
 ]
 
 function TelegramIcon(props) {
@@ -117,6 +121,232 @@ function InstagramIcon(props) {
     <svg viewBox="0 0 264.583 264.583" fill="currentColor" aria-hidden="true" {...props}>
       <path d="M132.345 33.973c-26.716 0-30.07.117-40.563.594-10.472.48-17.62 2.136-23.876 4.567-6.47 2.51-11.958 5.87-17.426 11.335-5.472 5.464-8.834 10.948-11.354 17.412-2.44 6.252-4.1 13.397-4.57 23.858-.47 10.486-.593 13.838-.593 40.535 0 26.697.119 30.037.594 40.522.482 10.465 2.14 17.609 4.57 23.859 2.515 6.465 5.876 11.95 11.346 17.414 5.466 5.468 10.955 8.834 17.42 11.345 6.26 2.431 13.41 4.088 23.881 4.567 10.493.477 13.844.594 40.559.594 26.719 0 30.061-.117 40.555-.594 10.472-.48 17.63-2.136 23.888-4.567 6.468-2.51 11.948-5.877 17.414-11.345 5.472-5.464 8.834-10.949 11.354-17.412 2.419-6.252 4.079-13.398 4.57-23.858.472-10.486.595-13.828.595-40.525s-.123-30.047-.594-40.533c-.492-10.465-2.152-17.608-4.57-23.858-2.521-6.466-5.883-11.95-11.355-17.414-5.472-5.468-10.944-8.827-17.42-11.335-6.271-2.431-13.424-4.088-23.897-4.567-10.493-.477-13.834-.594-40.558-.594zm-8.825 17.715c2.62-.004 5.542 0 8.825 0 26.266 0 29.38.094 39.752.565 9.591.438 14.797 2.04 18.264 3.385 4.591 1.782 7.864 3.912 11.305 7.352 3.443 3.44 5.575 6.717 7.362 11.305 1.346 3.46 2.951 8.663 3.388 18.247.47 10.363.573 13.475.573 39.71 0 26.233-.102 29.346-.573 39.709-.44 9.584-2.042 14.786-3.388 18.247-1.783 4.587-3.919 7.854-7.362 11.292-3.443 3.441-6.712 5.57-11.305 7.352-3.463 1.352-8.673 2.95-18.264 3.388-10.37.47-13.486.573-39.752.573-26.268 0-29.38-.102-39.751-.573-9.592-.443-14.797-2.044-18.267-3.39-4.59-1.781-7.87-3.911-11.313-7.352-3.443-3.44-5.574-6.709-7.362-11.298-1.346-3.461-2.95-8.663-3.387-18.247-.472-10.363-.566-13.476-.566-39.726s.094-29.347.566-39.71c.438-9.584 2.04-14.786 3.387-18.25 1.783-4.588 3.919-7.865 7.362-11.305 3.443-3.441 6.722-5.57 11.313-7.357 3.468-1.351 8.675-2.949 18.267-3.389 9.075-.41 12.592-.532 30.926-.553zm61.337 16.322c-6.518 0-11.805 5.277-11.805 11.792 0 6.512 5.287 11.796 11.805 11.796 6.517 0 11.804-5.284 11.804-11.796 0-6.513-5.287-11.796-11.805-11.796zm-52.512 13.782c-27.9 0-50.519 22.603-50.519 50.482 0 27.879 22.62 50.471 50.52 50.471s50.51-22.592 50.51-50.471c0-27.879-22.613-50.482-50.513-50.482zm0 17.715c18.11 0 32.792 14.67 32.792 32.767 0 18.096-14.683 32.767-32.792 32.767-18.11 0-32.791-14.671-32.791-32.767 0-18.098 14.68-32.767 32.791-32.767z" />
     </svg>
+  )
+}
+
+function SoundOnIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" />
+      <path d="M17 8.5a5 5 0 0 1 0 7" />
+      <path d="M19.5 6a8.5 8.5 0 0 1 0 12" />
+    </svg>
+  )
+}
+
+function SoundOffIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" />
+      <path d="M16 9.5 20.5 14" />
+      <path d="M20.5 9.5 16 14" />
+    </svg>
+  )
+}
+
+const AMBIENT_VOLUME = 0.08
+const AMBIENT_FADE_IN = 1.5
+
+function MusicToggle() {
+  const audioRef = useRef(null)
+  const userPausedRef = useRef(false)
+  const startedRef = useRef(false)
+  const [playing, setPlaying] = useState(false)
+
+  useEffect(() => {
+    const events = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll']
+
+    const removeStartListeners = () => {
+      events.forEach((event) => window.removeEventListener(event, startPlayback))
+    }
+
+    const startPlayback = () => {
+      const audio = audioRef.current
+      if (!audio || startedRef.current || userPausedRef.current) return
+      startedRef.current = true
+      audio.volume = 0
+      audio
+        .play()
+        .then(() => {
+          setPlaying(true)
+          removeStartListeners()
+        })
+        .catch(() => {
+          startedRef.current = false
+        })
+    }
+
+    events.forEach((event) =>
+      window.addEventListener(event, startPlayback, { passive: true }),
+    )
+
+    startPlayback()
+
+    return removeStartListeners
+  }, [])
+
+  const handleTimeUpdate = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    audio.volume =
+      audio.currentTime >= AMBIENT_FADE_IN
+        ? AMBIENT_VOLUME
+        : AMBIENT_VOLUME * (audio.currentTime / AMBIENT_FADE_IN)
+  }
+
+  const toggle = () => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    if (playing) {
+      userPausedRef.current = true
+      audio.pause()
+      setPlaying(false)
+      return
+    }
+
+    userPausedRef.current = false
+    startedRef.current = true
+    audio
+      .play()
+      .then(() => setPlaying(true))
+      .catch(() => setPlaying(false))
+  }
+
+  return (
+    <div className="music-toggle-wrap">
+      <audio
+        ref={audioRef}
+        src={ambientTrackUrl}
+        preload="auto"
+        loop
+        onTimeUpdate={handleTimeUpdate}
+      />
+      <button
+        type="button"
+        className={`music-toggle${playing ? ' music-toggle--playing' : ''}`}
+        onClick={toggle}
+        aria-pressed={playing}
+        aria-label={playing ? 'Выключить фоновую музыку' : 'Включить фоновую музыку'}
+      >
+        {playing ? (
+          <SoundOnIcon className="h-[1.1rem] w-[1.1rem]" />
+        ) : (
+          <SoundOffIcon className="h-[1.1rem] w-[1.1rem]" />
+        )}
+      </button>
+    </div>
+  )
+}
+
+function CloseIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M6 6 18 18" />
+      <path d="M18 6 6 18" />
+    </svg>
+  )
+}
+
+function ChevronIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M9 5 16 12 9 19" />
+    </svg>
+  )
+}
+
+function Gallery({ items }) {
+  const [activeIndex, setActiveIndex] = useState(null)
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+  const isOpen = activeIndex !== null
+
+  const close = () => setActiveIndex(null)
+  const showPrev = () =>
+    setActiveIndex((current) => (current - 1 + items.length) % items.length)
+  const showNext = () => setActiveIndex((current) => (current + 1) % items.length)
+
+  useEffect(() => {
+    if (!isOpen) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setActiveIndex(null)
+      if (event.key === 'ArrowLeft') {
+        setActiveIndex((current) => (current - 1 + items.length) % items.length)
+      }
+      if (event.key === 'ArrowRight') {
+        setActiveIndex((current) => (current + 1) % items.length)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, items.length])
+
+  return (
+    <>
+      <div className="gallery-grid">
+        {items.map((item, index) => (
+          <figure
+            key={item.title}
+            className={`gallery-grid__item--${item.area}${
+              hoveredIndex !== null && hoveredIndex !== index
+                ? ' gallery-grid__item--blurred'
+                : ''
+            }`}
+            onClick={() => setActiveIndex(index)}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <img src={item.image} alt={item.title} />
+          </figure>
+        ))}
+      </div>
+
+      {isOpen && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={items[activeIndex].title}>
+          <button
+            type="button"
+            className="lightbox__close"
+            onClick={close}
+            aria-label="Закрыть просмотр"
+          >
+            <CloseIcon className="h-5 w-5" />
+          </button>
+
+          <button
+            type="button"
+            className="lightbox__nav lightbox__nav--prev"
+            onClick={showPrev}
+            aria-label="Предыдущее фото"
+          >
+            <ChevronIcon className="h-6 w-6 rotate-180" />
+          </button>
+
+          <figure className="lightbox__figure">
+            <img src={items[activeIndex].image} alt={items[activeIndex].title} />
+            <figcaption>{items[activeIndex].title}</figcaption>
+          </figure>
+
+          <button
+            type="button"
+            className="lightbox__nav lightbox__nav--next"
+            onClick={showNext}
+            aria-label="Следующее фото"
+          >
+            <ChevronIcon className="h-6 w-6" />
+          </button>
+
+          <button
+            type="button"
+            className="lightbox__backdrop"
+            onClick={close}
+            aria-label="Закрыть просмотр"
+            tabIndex={-1}
+          />
+        </div>
+      )}
+    </>
   )
 }
 
@@ -181,6 +411,7 @@ function App() {
       <header className={`hero-nav${navScrolled ? ' hero-nav--scrolled' : ''}`}>
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
           <a className="brand-link" href="#top" aria-label="SMG RIDE">
+            <img className="brand-mark" src={brandMark} alt="" />
             <span className="brand-word brand-word--smg">SMG</span>
             <span className="brand-slash" />
             <span className="brand-word brand-word--ride">RIDE</span>
@@ -238,17 +469,22 @@ function App() {
           id="top"
           className="relative z-10 mx-auto grid min-h-[calc(64svh-88px)] w-full max-w-7xl content-end px-5 pb-8 pt-24 sm:px-8 lg:pb-10"
         >
-          <div className="max-w-3xl">
-            <p className="eyebrow">Прокат мощных квадроциклов в п. Симагино</p>
-            <h1 className="mt-5 max-w-3xl font-display text-[1.7rem] font-black uppercase leading-[1] sm:text-6xl lg:text-6xl">
-              Мощные квадроциклы для бездорожья
+          <div className="hero-intro max-w-3xl">
+            <p className="eyebrow hero-intro__eyebrow">Прокат мощных квадроциклов в п. Симагино</p>
+            <h1 className="hero-intro__title mt-5 max-w-3xl text-[1.7rem] font-black uppercase leading-[1] sm:text-6xl lg:text-6xl">
+              <span className="hero-title-line">
+                <span>Мощные квадроциклы</span>
+              </span>
+              <span className="hero-title-line hero-title-line--second">
+                <span>для бездорожья</span>
+              </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white/78">
+            <p className="hero-intro__copy mt-6 max-w-2xl text-lg font-medium leading-8 text-white/78">
               Свежие квадроциклы 2025 года, авторские маршруты, лесные дороги,
               песчаные холмы, водные броды и видовые точки над карьером.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="hero-intro__actions mt-8 flex flex-col gap-3 sm:flex-row">
               <a className="btn btn-primary" href={telegramUrl}>
                 Записаться в Telegram
               </a>
@@ -257,7 +493,7 @@ function App() {
               </a>
             </div>
 
-            <div className="hero-stats-row mt-9">
+            <div className="hero-intro__stats hero-stats-row mt-9">
               {stats.map(([value, label]) => (
                 <div className="hero-stats-row__item" key={label}>
                   <strong>{value}</strong>
@@ -309,16 +545,26 @@ function App() {
       </section>
 
       <section className="section-pad border-y border-white/10 bg-[#080808]">
-        <div className="mx-auto grid w-full max-w-7xl gap-4 px-5 sm:px-8 lg:grid-cols-3">
-          {experiences.map((item, index) => (
-            <article className="premium-card p-6" key={item.title}>
-              <span className="card-index">{String(index + 1).padStart(2, '0')}</span>
-              <h2 className="mt-6 font-display text-3xl font-black uppercase">
-                {item.title}
-              </h2>
-              <p className="mt-4 leading-7 text-white/62">{item.text}</p>
-            </article>
-          ))}
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_0.85fr]">
+          <div className="grid gap-4">
+            {experiences.map((item, index) => (
+              <article className="premium-card p-6" key={item.title}>
+                <span className="card-index">{String(index + 1).padStart(2, '0')}</span>
+                <h2 className="mt-6 font-display text-3xl font-black uppercase">
+                  {item.title}
+                </h2>
+                <p className="mt-4 leading-7 text-white/62">{item.text}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="experience-media">
+            <img
+              className="experience-media__primary"
+              src={mudAction}
+              alt="Квадроцикл на полном ходу поднимает брызги грязи"
+            />
+          </div>
         </div>
       </section>
 
@@ -338,7 +584,7 @@ function App() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-[1.3fr_1fr_1.05fr]">
           {routes.map((route) => (
             <article className="route-card group" key={route.name}>
               <img src={route.image} alt="" />
@@ -387,6 +633,22 @@ function App() {
         </div>
       </section>
 
+      <section id="booking" className="lead-section section-pad">
+        <div className="lead-section__inner">
+          <div className="lead-section__copy">
+            <p>Запись на маршрут</p>
+            <h2>Оставьте контакты. Мы подберём свободное время</h2>
+            <div className="lead-section__facts">
+              <span>Уточним количество человек</span>
+              <span>Подберём маршрут под ваш опыт</span>
+              <span>Ответим по телефону или в Telegram</span>
+            </div>
+          </div>
+
+          <BookingForm telegramUrl={telegramUrl} />
+        </div>
+      </section>
+
       <section id="gallery" className="section-pad mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
@@ -395,20 +657,9 @@ function App() {
               Реальные кадры команды и маршрутов
             </h2>
           </div>
-          <p className="max-w-xl leading-8 text-white/58">
-            Фото с выездов показывают атмосферу SMG RIDE: люди, экипировка,
-            техника, лесные дороги и видовые точки рядом с Симагино.
-          </p>
         </div>
 
-        <div className="gallery-grid">
-          {gallery.map((item) => (
-            <figure key={item.title}>
-              <img src={item.image} alt={item.title} />
-              <figcaption>{item.title}</figcaption>
-            </figure>
-          ))}
-        </div>
+        <Gallery items={gallery} />
       </section>
 
       <section id="faq" className="section-pad border-y border-white/10 bg-[#080808]">
@@ -494,6 +745,54 @@ function App() {
           </div>
         </div>
       </section>
+
+      <footer className="site-footer">
+        <div className="site-footer__top">
+          <a className="brand-link" href="#top" aria-label="SMG RIDE">
+            <span className="brand-word brand-word--smg">SMG</span>
+            <span className="brand-slash" />
+            <span className="brand-word brand-word--ride">RIDE</span>
+          </a>
+
+          <nav className="site-footer__nav">
+            <a href="#routes">Маршруты</a>
+            <a href="#price">Цены</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contacts">Как найти</a>
+          </nav>
+
+          <div className="site-footer__contacts">
+            <a
+              className="social-icon-link"
+              href={instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="SMG RIDE в Instagram"
+            >
+              <InstagramIcon className="h-[1.05rem] w-[1.05rem]" />
+            </a>
+            <a
+              className="social-icon-link"
+              href={telegramUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="SMG RIDE в Telegram"
+            >
+              <TelegramIcon className="h-[1.05rem] w-[1.05rem]" />
+            </a>
+            <a className="site-footer__phone" href={phoneHref}>
+              {phoneNumber}
+            </a>
+          </div>
+        </div>
+
+        <div className="site-footer__bottom">
+          <span>© {new Date().getFullYear()} SMG RIDE. Все права защищены.</span>
+          <span>СНТ Надежда, 53 км Выборгского шоссе</span>
+        </div>
+      </footer>
+
+      <MusicToggle />
     </main>
   )
 }
