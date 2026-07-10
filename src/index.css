@@ -390,17 +390,50 @@ a {
 }
 
 .brand-word--ride {
-  color: #f4f4f4;
-  text-shadow: 0 0 20px rgba(241, 18, 18, 0.35);
+  position: relative;
+  display: inline-block;
+  color: #ff3b3b;
+  text-shadow: 0 0 18px rgba(241, 18, 18, 0.55);
 }
 
-.brand-slash {
-  width: 1.45rem;
-  height: 0.62rem;
-  transform: skewX(-22deg);
-  background:
-    linear-gradient(135deg, transparent 0 18%, #f11212 18% 48%, transparent 48% 58%, #f11212 58% 100%);
-  box-shadow: 0 0 18px rgba(241, 18, 18, 0.62);
+.brand-word--ride::before,
+.brand-word--ride::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  content: attr(data-text);
+  pointer-events: none;
+}
+
+.brand-word--ride::before {
+  color: #38e8ff;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  transform: translate(-3px, 0.5px);
+}
+
+.brand-word--ride::after {
+  color: #f11212;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  transform: translate(3px, -0.5px);
+}
+
+.brand-slash-triple {
+  display: inline-flex;
+  gap: 0.1rem;
+  font-family:
+    Oswald, Impact, "Arial Narrow", Manrope, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1.5rem, 2vw, 1.85rem);
+  font-weight: 700;
+  color: #f11212;
+  filter: drop-shadow(0 0 6px rgba(241, 18, 18, 0.55));
+}
+
+.brand-slash-triple span {
+  display: inline-block;
+  transform: skewX(-14deg);
 }
 
 header nav a {
@@ -1585,6 +1618,19 @@ header nav a:hover::after {
 }
 
 @media (max-width: 640px) {
+  .brand-mark {
+    height: 2.5rem;
+  }
+
+  .brand-word {
+    font-size: 1.35rem;
+  }
+
+  .brand-slash-triple {
+    gap: 0.05rem;
+    font-size: 1.1rem;
+  }
+
   .section-title {
     font-size: 2.45rem;
   }

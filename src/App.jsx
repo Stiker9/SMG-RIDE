@@ -413,8 +413,14 @@ function App() {
           <a className="brand-link" href="#top" aria-label="SMG RIDE">
             <img className="brand-mark" src={brandMark} alt="" />
             <span className="brand-word brand-word--smg">SMG</span>
-            <span className="brand-slash" />
-            <span className="brand-word brand-word--ride">RIDE</span>
+            <span className="brand-slash-triple" aria-hidden="true">
+              <span>/</span>
+              <span>/</span>
+              <span>/</span>
+            </span>
+            <span className="brand-word brand-word--ride" data-text="RIDE">
+              RIDE
+            </span>
           </a>
 
           <nav className="hidden items-center gap-7 text-sm font-bold uppercase text-white/70 md:flex">
@@ -750,8 +756,14 @@ function App() {
         <div className="site-footer__top">
           <a className="brand-link" href="#top" aria-label="SMG RIDE">
             <span className="brand-word brand-word--smg">SMG</span>
-            <span className="brand-slash" />
-            <span className="brand-word brand-word--ride">RIDE</span>
+            <span className="brand-slash-triple" aria-hidden="true">
+              <span>/</span>
+              <span>/</span>
+              <span>/</span>
+            </span>
+            <span className="brand-word brand-word--ride" data-text="RIDE">
+              RIDE
+            </span>
           </a>
 
           <nav className="site-footer__nav">
