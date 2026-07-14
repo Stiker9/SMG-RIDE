@@ -44,19 +44,19 @@ const experiences = [
 
 const routes = [
   {
-    name: 'Средний и выше',
-    time: '2-3 часа',
-    image: heroOverlook,
-    copy: 'Лесной массив, водные броды, песчаные холмы, высокий карьер и знаменитая эндуро-трасса "Тропа Лося".',
-  },
-  {
-    name: 'Лайт маршрут',
+    name: 'Начальный уровень',
     time: '1-2 часа',
     image: forestRide,
     copy: 'Умеренный уровень экстрима для новичков, спокойного знакомства с техникой и поездок родителей с детьми.',
   },
   {
-    name: 'Индивидуальный',
+    name: 'Средний уровень и продвинутый',
+    time: '2-3 часа',
+    image: heroOverlook,
+    copy: 'Лесной массив, водные броды, песчаные холмы, высокий карьер и знаменитая эндуро-трасса "Тропа Лося".',
+  },
+  {
+    name: 'Индивидуальный маршрут',
     time: 'от 2 часов',
     image: forestDuo,
     copy: 'Маршрут под вашу идею: можно договориться на долгий выезд, пикник, купание в озере и свои остановки.',
@@ -146,11 +146,14 @@ function SoundOffIcon(props) {
 
 const AMBIENT_VOLUME = 0.08
 const AMBIENT_FADE_IN = 1.5
+const AMBIENT_PLAY_DURATION = 30
+const AMBIENT_FADE_OUT = 4
 
 function MusicToggle() {
   const audioRef = useRef(null)
   const userPausedRef = useRef(false)
   const startedRef = useRef(false)
+  const finishedRef = useRef(false)
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
@@ -162,7 +165,12 @@ function MusicToggle() {
 
     const startPlayback = () => {
       const audio = audioRef.current
-      if (!audio || startedRef.current || userPausedRef.current) return
+      if (
+        !audio ||
+        startedRef.current ||
+        userPausedRef.current ||
+        finishedRef.current
+      ) return
       startedRef.current = true
       audio.volume = 0
       audio
@@ -188,15 +196,34 @@ function MusicToggle() {
   const handleTimeUpdate = () => {
     const audio = audioRef.current
     if (!audio) return
-    audio.volume =
-      audio.currentTime >= AMBIENT_FADE_IN
-        ? AMBIENT_VOLUME
-        : AMBIENT_VOLUME * (audio.currentTime / AMBIENT_FADE_IN)
+
+    if (audio.currentTime >= AMBIENT_PLAY_DURATION) {
+      audio.pause()
+      audio.currentTime = AMBIENT_PLAY_DURATION
+      audio.volume = 0
+      finishedRef.current = true
+      setPlaying(false)
+      return
+    }
+
+    const fadeInVolume = Math.min(audio.currentTime / AMBIENT_FADE_IN, 1)
+    const fadeOutStart = AMBIENT_PLAY_DURATION - AMBIENT_FADE_OUT
+    const fadeOutVolume =
+      audio.currentTime > fadeOutStart
+        ? (AMBIENT_PLAY_DURATION - audio.currentTime) / AMBIENT_FADE_OUT
+        : 1
+
+    audio.volume = AMBIENT_VOLUME * Math.min(fadeInVolume, fadeOutVolume)
+  }
+
+  const handleEnded = () => {
+    finishedRef.current = true
+    setPlaying(false)
   }
 
   const toggle = () => {
     const audio = audioRef.current
-    if (!audio) return
+    if (!audio || finishedRef.current) return
 
     if (playing) {
       userPausedRef.current = true
@@ -219,8 +246,8 @@ function MusicToggle() {
         ref={audioRef}
         src={ambientTrackUrl}
         preload="auto"
-        loop
         onTimeUpdate={handleTimeUpdate}
+        onEnded={handleEnded}
       />
       <button
         type="button"
@@ -237,6 +264,10 @@ function MusicToggle() {
       </button>
     </div>
   )
+}
+
+function SectionIndex({ n }) {
+  return <span className="section-index">/ {String(n).padStart(2, '0')}</span>
 }
 
 function CloseIcon(props) {
@@ -523,7 +554,8 @@ function App() {
         </div>
       </section>
 
-      <section className="hero-bridge-section">
+      <section className="hero-bridge-section relative">
+        <SectionIndex n={1} />
         <div className="hero-bridge-inner">
           <div className="hero-bridge-content">
             <p className="eyebrow hero-bridge-eyebrow">SMG RIDE / п. Симагино</p>
@@ -550,7 +582,8 @@ function App() {
         </div>
       </section>
 
-      <section className="section-pad border-y border-white/10 bg-[#080808]">
+      <section className="section-pad relative border-y border-white/10 bg-[#080808]">
+        <SectionIndex n={2} />
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_0.85fr]">
           <div className="grid gap-4">
             {experiences.map((item, index) => (
@@ -578,6 +611,7 @@ function App() {
         id="routes"
         className="section-pad relative mx-auto grid w-full max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr]"
       >
+        <SectionIndex n={3} />
         <div>
           <p className="eyebrow">Маршруты</p>
           <h2 className="section-title mt-4">
@@ -604,7 +638,8 @@ function App() {
         </div>
       </section>
 
-      <section id="price" className="section-pad bg-[#0d0d0d]">
+      <section id="price" className="section-pad relative bg-[#0d0d0d]">
+        <SectionIndex n={4} />
         <div className="mx-auto grid w-full max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <p className="eyebrow">Стоимость</p>
@@ -639,7 +674,8 @@ function App() {
         </div>
       </section>
 
-      <section id="booking" className="lead-section section-pad">
+      <section id="booking" className="lead-section section-pad relative">
+        <SectionIndex n={5} />
         <div className="lead-section__inner">
           <div className="lead-section__copy">
             <p>Запись на маршрут</p>
@@ -655,7 +691,8 @@ function App() {
         </div>
       </section>
 
-      <section id="gallery" className="section-pad mx-auto w-full max-w-7xl px-5 sm:px-8">
+      <section id="gallery" className="section-pad relative mx-auto w-full max-w-7xl px-5 sm:px-8">
+        <SectionIndex n={6} />
         <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <p className="eyebrow">Галерея</p>
@@ -668,7 +705,8 @@ function App() {
         <Gallery items={gallery} />
       </section>
 
-      <section id="faq" className="section-pad border-y border-white/10 bg-[#080808]">
+      <section id="faq" className="section-pad relative border-y border-white/10 bg-[#080808]">
+        <SectionIndex n={7} />
         <div className="mx-auto grid w-full max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-[0.65fr_1.35fr]">
           <div>
             <p className="eyebrow">FAQ</p>
@@ -715,8 +753,9 @@ function App() {
 
       <section
         id="contacts"
-        className="section-pad border-t border-white/10 bg-[linear-gradient(135deg,#080808,#160707)]"
+        className="section-pad relative border-t border-white/10 bg-[linear-gradient(135deg,#080808,#160707)]"
       >
+        <SectionIndex n={8} />
         <div className="mx-auto grid w-full max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_0.92fr]">
           <div>
             <p className="eyebrow">Как нас найти</p>

@@ -786,6 +786,36 @@ header nav a:hover::after {
   padding-block: 5rem;
 }
 
+.section-index {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.55);
+  padding: 0.3rem 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-family:
+    Oswald, Impact, "Arial Narrow", Manrope, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .section-index {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.68rem;
+  }
+}
+
 .section-title {
   max-width: 760px;
   color: #ffffff;
